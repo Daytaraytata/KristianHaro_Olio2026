@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int game(int maxnum) {
+    srand(time(0));
+    int vastaus = rand() % maxnum; + 1;
+    int kokonaisluku;
+    int arvausMaara = 0;
+
+    cout << "Arvaa luku valilla 1-" << maxnum << endl;
+
+    do {
+        cout << "Syota kokonaisluku: ";
+        cin >> kokonaisluku;
+        arvausMaara++;
+
+        if (kokonaisluku < vastaus) {
+            cout << "Arvauksesi on pienempi kuin oikea luku." << endl;
+        } else if (kokonaisluku > vastaus) {
+            cout << "Arvauksesi on suurempi kuin oikea luku." << endl;
+        } else {
+            cout << "Oikein! Luku oli " << vastaus << endl;
+        }
+    } while (kokonaisluku != vastaus);
+
+    return arvausMaara;
+}
+
+int main() {
+    int yritykset = game(40);
+    cout << "Arvasit oikein " << yritykset << " yrityksella." << endl;
+    return 0;
+}
