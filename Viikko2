@@ -1,0 +1,71 @@
+#include "Game.h"
+
+int main() {
+    Game peli(10);  // Voit vaihtaa maksimiluvun haluamaksesi
+    peli.play();
+    return 0;
+}
+
+//////////
+#ifndef GAME_H
+#define GAME_H
+
+class Game
+{
+public:
+    Game(int max);
+    ~Game();
+    void play();
+    
+private:
+    int maxNumber;
+    int playerGuess;
+    int randomNumber;
+    int numOfGuesses;
+    void printGameResult();
+};
+
+#endif
+
+/////////
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include "Game.h"
+
+using namespace std;
+
+Game::Game(int max) : maxNumber(max), playerGuess(0), randomNumber(0), numOfGuesses(0) {
+    srand(time(0));
+    randomNumber = rand() % maxNumber + 1;
+    cout << "PELIN KONSTRUKTORI: olio alustettu, maksimiarvo on " << maxNumber << endl;
+}
+
+Game::~Game() {
+    cout << "PELIN DESTRUKTORI: olio poistettu pinomuistista" << endl;
+}
+
+void Game::play() {
+    cout << "Arvaa luku valilta 1–" << maxNumber << endl;
+    
+    do {
+        cout << "Syötä arvauksesi: ";
+        cin >> playerGuess;
+        numOfGuesses++;
+        
+        if (playerGuess < randomNumber) {
+            cout << "Arvauksesi on liian pieni" << endl;
+        } else if (playerGuess > randomNumber) {
+            cout << "Arvauksesi on liian suuri" << endl;
+        } else {
+            cout << "Oikein! Arvattava luku oli " << randomNumber << endl;
+        }
+    } while (playerGuess != randomNumber);
+    
+    printGameResult();
+}
+
+void Game::printGameResult() {
+    cout << "Arvasit oikein! Luku oli " << randomNumber
+         << " ja siihen meni " << numOfGuesses << " yritystä." << endl;
+}
